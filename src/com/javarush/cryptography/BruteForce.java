@@ -70,9 +70,4 @@ public class BruteForce {
         return count;
     }
 
-    private int countLetterDotSpaceLetter(String text) {
-        int count = 0;
-        for ()
-    }
-
 }
