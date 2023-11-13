@@ -1,0 +1,83 @@
+package com.javarush.cryptography;
+
+import com.javarush.text.Alphabetic;
+import com.javarush.text.Language;
+
+import java.util.LinkedHashSet;
+
+public class BruteForce {
+    private final Alphabetic alphabetic = new Alphabetic();
+    private final Language language = new Language();
+    private final CaesarCipher caesarCipher = new CaesarCipher();
+
+    public int findKey(String text) {
+        LinkedHashSet<Character> alphabet = alphabetic.detectAlphabet(language.detectLanguage(text));
+        int alphabetSize = alphabet.size();
+        int key = 0;
+        int maxCount = Integer.MIN_VALUE;
+
+        for (int i = 0; i < alphabetSize; i++) {
+            String findText = caesarCipher.decode(text, i);
+            int count = countFirstLetterIsUpperCase(findText);
+            count += countStartsWithSpaceOrNewLine(findText);
+            count += countEndsWithDot(findText);
+            count += countLetterCommaSpaceLetter(findText);
+            count += countLetterDotSpaceLetter(findText);
+
+
+            if (count > maxCount) {
+                maxCount = count;
+                key = i;
+            }
+        }
+        return key;
+    }
+
+    private int countFirstLetterIsUpperCase(String text) {
+        return Character.isUpperCase(text.charAt(0)) ? 1 : 0;
+    }
+
+    private int countStartsWithSpaceOrNewLine(String text) {
+        int count = 0;
+        if (text.startsWith(" ") || text.startsWith("\n") || text.startsWith("\n\n")) {
+            count = 1;
+        }
+        return count;
+    }
+
+    private int countEndsWithDot(String text) {
+        return text.endsWith(".") ? 1 : 0;
+    }
+
+    private int countLetterCommaSpaceLetter(String text) {
+        int count = 0;
+        if (text.contains(", ")) {
+            int index = text.indexOf(", ");
+            while (index != -1 && index < text.length() - 2) {
+                if (index > 1 &&
+                        Character.isLowerCase(text.charAt(index - 1)) &&
+                        Character.isLowerCase(text.charAt(index + 2))) {
+                    count++;
+                }
+                index = text.indexOf(", ", index + 1);
+            }
+        }
+        return count;
+    }
+
+    private int countLetterDotSpaceLetter(String text) {
+        int count = 0;
+        if (text.contains(". ")) {
+            int index = text.indexOf(". ");
+            while (index != -1 && index < text.length() - 2) {
+                if (index > 1 &&
+                        Character.isLowerCase(text.charAt(index - 1)) &&
+                        Character.isUpperCase(text.charAt(index + 2))) {
+                    count++;
+                }
+                index = text.indexOf(". ", index + 1);
+            }
+        }
+        return count;
+    }
+}
