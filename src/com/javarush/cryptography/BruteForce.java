@@ -62,12 +62,21 @@ public class BruteForce {
 
     private int countLetterCommaSpaceLetter(String text) {
         int count = 0;
-        for (int i = 2; i < text.length() - 1; i++) {
-            if (text.charAt(i) == ',' && text.charAt(i + 1) == ' ' && Character.isLowerCase(text.charAt(i - 1)) && Character.isLowerCase(text.charAt(i + 1))) {
+        for (int i = 2; i < text.length() - 2; i++) {
+            if (text.charAt(i) == ',' && text.charAt(i + 1) == ' ' && Character.isLowerCase(text.charAt(i - 1)) && Character.isLowerCase(text.charAt(i + 2))) {
                 count++;
             }
         }
         return count;
     }
 
+    private int countLetterDotSpaceLetter(String text) {
+        int count = 0;
+        for (int i = 2; i < text.length() - 2; i++) {
+            if (text.charAt(i) == '.' && text.charAt(i + 1) == ' ' && Character.isLowerCase(text.charAt(i - 1)) && Character.isUpperCase(text.charAt(i + 2))) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
