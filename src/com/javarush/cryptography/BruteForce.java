@@ -21,9 +21,9 @@ public class BruteForce {
             int count = countFirstLetterIsUpperCase(findText);
             count += countStartsWithSpaceOrNewLine(findText);
             count += countEndsWithDot(findText);
+            count += countLetterSpaceLetter(findText);
             count += countLetterCommaSpaceLetter(findText);
             count += countLetterDotSpaceLetter(findText);
-            count += countLetterSpaceLetter(findText);
 
 
             if (count > maxCount) {
