@@ -23,6 +23,7 @@ public class BruteForce {
             count += countEndsWithDot(findText);
             count += countLetterCommaSpaceLetter(findText);
             count += countLetterDotSpaceLetter(findText);
+            count += countLetterSpaceLetter(findText);
 
 
             if (count > maxCount) {
@@ -48,6 +49,17 @@ public class BruteForce {
     private int countEndsWithDot(String text) {
         return text.endsWith(".") ? 1 : 0;
     }
+
+    private int countLetterSpaceLetter(String text) {
+        int count = 0;
+        for (int i = 1; i < text.length() - 1; i++) {
+            if (text.charAt(i) == ' ' && Character.isLowerCase(text.charAt(i - 1)) && Character.isLowerCase(text.charAt(i + 1))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 
     private int countLetterCommaSpaceLetter(String text) {
         int count = 0;
